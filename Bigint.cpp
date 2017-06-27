@@ -368,42 +368,11 @@ using myBigint::Bigint;
 int main()
 {
 	ios::sync_with_stdio(false);
-	// freopen("1.in", "r", stdin);
-	Bigint a, b;
-	long long c;
-	int type, T;
-	cin >> type >> T;
-	while(T--)
-	{
-		if(type == 1 || type == 3)
-		{
-			cin >> a >> b;
-			cout << a + b << endl;
-		}
-		else if(type == 2 || type == 4)
-		{
-			cin >> a >> b;
-			cout << a - b << endl;
-		}
-		else if(type == 5)
-		{
-			cin >> a >> b;
-			cout << a * b << endl;
-		}
-		else if(type == 6 || type == 7)
-		{
-			cin >> a >> b;
-			pair<Bigint, Bigint> div = divide_abs(a, b);;
-			div.first.sign = a.sign ^ b.sign;
-			div.second.sign = a.sign;
-			cout << div.first << endl << div.second << endl;
-		}
-		else if(type == 8)
-		{
-			cin >> a >> c;
-			cout << (a ^ c) << endl;
-		}
-	}
 
+	Bigint a, b, c;
+
+	cin >> a >> b;
+	cout << a * b << endl;
+	
 	return 0;
 }
