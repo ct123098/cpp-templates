@@ -60,7 +60,7 @@ namespace myDinic
 		if(x == T)
 			return s;
 		int ret = 0;
-		for(int i = head[x]; i; i = e[i].next)
+		for(int &i = head[x]; i; i = e[i].next)
 			if(e[i].w > 0 && dis[x] + 1 == dis[e[i].to])
 			{
 				int t = dfs(e[i].to, min(e[i].w, s));
@@ -87,8 +87,6 @@ namespace myDinic
 int main()
 {
 	ios::sync_with_stdio(false);
-	// freopen("1.in", "r", stdin);
-	// freopen("1.out", "w", stdout);
 
 	using namespace myDinic;
 
