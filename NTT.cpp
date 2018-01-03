@@ -26,10 +26,11 @@ int get_inv(int x)
 	return fpow(x, MOD - 2);
 }
 
-namespace myNTT
+// Fast Number-Theoretic Transform
+namespace myFNT
 {
 	int rev[4 * MAXN], w1[4 * MAXN], w2[4 * MAXN];
-	void NTT_core(int n, int *a, int *w)
+	void FNT_core(int n, int *a, int *w)
 	{
 		for(int i = 0; i < n; i++)
 			if(rev[i] < i)
@@ -45,11 +46,11 @@ namespace myNTT
 	}
 	void NTT(int n, int *a)
 	{
-		NTT_core(n, a, w1);
+		FNT_core(n, a, w1);
 	}
 	void INTT(int n, int *a)
 	{
-		NTT_core(n, a, w2);
+		FNT_core(n, a, w2);
 		int inv = get_inv(n);
 		for(int i = 0; i < n; i++)
 			a[i] = (long long)a[i] * inv % MOD;
@@ -73,9 +74,9 @@ namespace myNTT
 		for(int i = half - 1; i >= 0; i--)
 			w2[i] = w2[i << 1];
 	}
-	void conv_ntt(int n, int *a, int m, int *b, int *c)
+	int A[4 * MAXN], B[4 * MAXN], C[4 * MAXN];
+	void conv_ntt(int n, const int *a, int m, const int *b, int *c)
 	{
-		static int A[4 * MAXN], B[4 * MAXN], C[4 * MAXN];
 		int len = 1;
 		while(len < n + m - 1) len <<= 1;
 		for(int i = 0; i < len; i++) A[i] = B[i] = C[i] = 0;
@@ -89,9 +90,8 @@ namespace myNTT
 		for(int i = 0; i < n + m - 1; i++)
 			c[i] = C[i];
 	}
-	void conv_force(int n, int *a, int m, int *b, int *c)
+	void conv_force(int n, const int *a, int m, const int *b, int *c)
 	{
-		static int C[4 * MAXN];
 		for(int i = 0; i < n + m - 1; i++)
 			C[i] = 0;
 		for(int i = 0; i < n; i++)
@@ -100,7 +100,7 @@ namespace myNTT
 		for(int i = 0; i < n + m - 1; i++)
 			c[i] = C[i];
 	}
-	void conv(int n, int *a, int m, int *b, int *c)
+	void conv(int n, const int *a, int m, const int *b, int *c)
 	{
 		if((long long)n * m <= 2333)
 			conv_force(n, a, m, b, c);
@@ -109,7 +109,7 @@ namespace myNTT
 	}
 }
 
-using myNTT::conv;
+using myFNT::conv;
 
 int n, m;
 int a[MAXN], b[MAXN], c[MAXN];
